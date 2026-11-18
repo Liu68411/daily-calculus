@@ -32,7 +32,6 @@
   }
   .page{max-width:900px;margin:0 auto;padding:20px 22px 56px}
 
-  /* 顶栏 */
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:4px 0 22px}
   .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);font-weight:800;font-size:14px;letter-spacing:.01em}
   .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(140deg,#1d4ed8,#3b82f6);color:#fff;display:grid;place-items:center;font-family:"Cambria Math",Georgia,serif;font-size:17px;box-shadow:0 10px 18px -10px rgba(37,99,235,.7)}
@@ -41,26 +40,31 @@
   nav a:hover{background:#fff;color:var(--accent);box-shadow:0 2px 8px rgba(70,55,25,.08)}
   nav a.active{background:#fff;color:var(--accent);box-shadow:0 2px 8px rgba(70,55,25,.08)}
 
-  /* 标题区 */
   .hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:4px 0 24px;border-bottom:1px dashed #d9d0bd}
   .kicker{font-size:11px;font-weight:800;letter-spacing:.22em;color:var(--accent)}
   h1{font-size:clamp(36px,6vw,52px);line-height:1.12;margin:8px 0 10px;letter-spacing:-.03em;font-weight:800}
   .hero p{margin:0;color:var(--muted);font-size:13.5px}
-  .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;font-size:12.5px;color:#8b8272}
+  .meta{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:14px;font-size:12.5px;color:#8b8272}
   .meta .sep{width:3px;height:3px;border-radius:50%;background:#c9bfa9}
   .meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+  .set-pill{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);padding:2px 8px;border-radius:6px}
 
-  .score{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;min-width:160px;box-shadow:var(--shadow);flex:none}
+  .score{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;min-width:170px;box-shadow:var(--shadow);flex:none}
   .score-num{font-size:28px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
   .score-num span{font-size:13px;color:var(--muted);font-weight:600;margin-left:2px}
   .score-label{font-size:11.5px;color:#8b8272;margin-top:5px}
   .progress{height:6px;background:#eee8db;border-radius:99px;overflow:hidden;margin-top:10px}
-  .progress i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s ease}
+  .progress i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s ease}
+  .level-row{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:11px;color:#8b8272}
+  .level-dots{display:flex;gap:3px}
+  .level-dots i{display:block;width:12px;height:5px;border-radius:2px;background:#e8e1d3;transition:.25s}
+  .level-dots i.on{background:var(--accent)}
+  .level-row b{color:var(--ink);font-size:11.5px}
 
-  /* 题卡 */
   .list{display:flex;flex-direction:column;gap:16px;margin:24px 0 0}
-  .problem{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow);transition:border-color .2s}
-  .problem.is-done{border-color:#bbf7d0}
+  .problem{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow);transition:border-color .2s,background .2s}
+  .problem.correct{border-color:#bbf7d0;background:#f8fefb}
+  .problem.wrong{border-color:#fecaca;background:#fffafa}
   .num{width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent);font-weight:800;display:grid;place-items:center;font-size:13.5px;flex:none;font-variant-numeric:tabular-nums}
   .content{flex:1;min-width:0}
   .type{font-size:10.5px;letter-spacing:.12em;font-weight:800;color:#9a8f7a;margin-bottom:5px}
@@ -69,23 +73,47 @@
   .math i{font-style:italic}
   .math sup{font-size:.64em}
   .prime{font-family:Georgia,"Times New Roman",serif;font-style:normal;font-weight:700;font-size:1.18em;line-height:0;vertical-align:.2em;padding-left:.03em;color:inherit}
-  .answer{margin-top:14px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px 15px}
+
+  .input-row{margin-top:12px}
+  .ans-input{
+    width:100%;font-family:"Cambria Math","STIX Two Math",Georgia,"Times New Roman",serif;
+    font-size:16px;color:var(--ink);background:#fff;border:1.5px solid #ddd3c0;border-radius:10px;
+    padding:11px 14px;outline:none;transition:border-color .18s, box-shadow .18s;
+  }
+  .ans-input::placeholder{color:#b8ad98;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12.5px}
+  .ans-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .ans-input:disabled{background:#f8f6f0;color:#6b7280}
+  .input-hint{font-size:11px;color:#a89d88;margin-top:5px}
+
+  .feedback{font-size:12.5px;font-weight:700;margin-top:9px;line-height:1.6}
+  .feedback.ok{color:#15803d}
+  .feedback.warn{color:#b45309}
+  .feedback.bad{color:#b91c1c}
+
+  .answer{margin-top:12px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px 15px}
   .answer[hidden]{display:none}
   .answer .head{font-size:10.5px;font-weight:800;letter-spacing:.12em;color:var(--accent);margin-bottom:5px}
   .ans-main{font-size:17px;font-weight:700;line-height:1.95}
   .steps{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:3px}
   .steps li{font-size:13px;color:#475569;line-height:1.9;padding-left:12px;position:relative}
   .steps li::before{content:"·";position:absolute;left:0;color:var(--accent);font-weight:800}
-  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
-  .btn{font-family:inherit;font-size:13px;font-weight:700;border-radius:10px;border:1px solid #ddd3c0;background:#fff;color:#4b5563;padding:9px 14px;cursor:pointer;transition:.18s}
-  .btn:hover{border-color:var(--accent);color:var(--accent);background:#fff}
-  .btn.small{padding:7px 12px;font-size:12px;border-radius:9px}
-  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 10px 18px -12px rgba(37,99,235,.8)}
-  .btn.primary:hover{background:#1d4ed8;color:#fff}
-  .done-label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap}
-  .done-label input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
 
   .actions{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 0}
+  .btn{font-family:inherit;font-size:13px;font-weight:700;border-radius:10px;border:1px solid #ddd3c0;background:#fff;color:#4b5563;padding:9px 14px;cursor:pointer;transition:.18s}
+  .btn:hover{border-color:var(--accent);color:var(--accent);background:#fff}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 10px 18px -12px rgba(37,99,235,.8)}
+  .btn.primary:hover{background:#1d4ed8;color:#fff}
+  .btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+  .btn.next{background:var(--accent);border-color:var(--accent);color:#fff;padding:11px 18px;font-size:13.5px}
+  .btn.next:hover{background:#1d4ed8;color:#fff}
+
+  .result-panel{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .result-panel[hidden]{display:none}
+  .result-big{font-size:24px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .result-big span{font-size:13px;color:#8b8272;font-weight:600}
+  .result-msg{font-size:12.5px;color:#6b7280;margin-top:3px;line-height:1.65}
+  .result-msg b{color:var(--accent)}
+
   footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:30px;padding-top:16px;font-size:12px;color:#9a8f7a}
   footer a{color:var(--accent);text-decoration:none;font-weight:700}
   footer a:hover{text-decoration:underline}
@@ -97,10 +125,11 @@
     .page{padding:16px 14px 42px}
     .topbar{padding-bottom:16px}
     .hero{flex-direction:column;align-items:stretch;gap:14px;padding-bottom:18px}
-    .score{display:flex;align-items:center;gap:12px;padding:10px 14px;min-width:0}
+    .score{display:flex;align-items:center;gap:12px;padding:10px 14px;min-width:0;flex-wrap:wrap}
     .score-num{font-size:22px}
     .score-label{margin:0}
-    .progress{flex:1;margin:0;min-width:70px}
+    .progress{flex:1;margin:0;min-width:60px}
+    .level-row{margin:0;width:100%}
     .problem{padding:16px 15px;gap:12px}
     .num{width:32px;height:32px;font-size:12px;border-radius:9px}
     .q{font-size:15.5px;line-height:1.95}
@@ -109,7 +138,7 @@
   }
   @media print{
     body{background:#fff}
-    .topbar,.actions,.row,.score,.meta,.toast,footer,.kicker{display:none!important}
+    .topbar,.actions,.score,.meta,.toast,footer,.kicker,.result-panel{display:none!important}
     .page{max-width:none;padding:0}
     .hero{border:none;padding:0 0 12px}
     .problem{box-shadow:none;border:1px solid #ddd;break-inside:avoid;page-break-inside:avoid}
@@ -133,33 +162,47 @@
       <div>
         <div class="kicker">DAILY DERIVATIVE</div>
         <h1>每日求导</h1>
-        <p>每天 5 道 · 三次以下多项式 · 按日期自动生成</p>
+        <p>每天 5 道 · 三次以下多项式 · 输入答案自动判分</p>
         <div class="meta">
           <span id="today">—</span>
+          <span class="sep"></span>
+          <span class="set-pill" id="setLabel">今日题目</span>
           <span class="sep"></span>
           <span>距明日更新 <b id="countdown">--:--:--</b></span>
         </div>
       </div>
       <div class="score">
-        <div class="score-num"><b id="doneCount">0</b><span>/ 5</span></div>
-        <div class="score-label">今日已完成</div>
+        <div class="score-num"><b id="scoreNum">—</b><span>/ 5</span></div>
+        <div class="score-label" id="scoreLabel">提交后判分</div>
         <div class="progress"><i id="bar"></i></div>
+        <div class="level-row">
+          <span>难度</span>
+          <span class="level-dots" id="levelDots"><i></i><i></i><i></i><i></i><i></i></span>
+          <b id="levelText">Lv.3</b>
+        </div>
       </div>
     </section>
 
     <section class="list" id="list"></section>
 
     <div class="actions">
-      <button class="btn primary" id="showAll">显示全部答案</button>
-      <button class="btn" id="hideAll">隐藏全部答案</button>
+      <button class="btn primary" id="submitBtn">提交答案并判分</button>
       <button class="btn" id="copyBtn">复制题目</button>
       <button class="btn" id="printBtn">打印</button>
+    </div>
+
+    <div class="result-panel" id="resultPanel" hidden>
+      <div>
+        <div class="result-big"><span id="scoreBig">0</span> <span>/ 5 答对</span></div>
+        <div class="result-msg" id="resultMsg"></div>
+      </div>
+      <button class="btn next" id="nextBtn">再来一组 →</button>
     </div>
   </main>
 
   <footer>
     <a href="每日微积分.html">← 去练微积分</a>
-    <span>题目每天 00:00 自动更新 · 答案与解析在每题下方</span>
+    <span>输入答案后判分 · 根据正确率自动调节难度</span>
   </footer>
 </div>
 
@@ -187,12 +230,6 @@
   }
   function ri(r, a, b){ return a + Math.floor(r() * (b - a + 1)); }
   function nz(r, a, b){ let v = 0; while (v === 0) v = ri(r, a, b); return v; }
-  function pick(r, arr){ return arr[Math.floor(r() * arr.length)]; }
-  function shuffle(r, arr){
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
-    return a;
-  }
 
   /* ================= 多项式工具 ================= */
   function countNZ(a){ let n = 0; for (const v of a) if (v) n++; return n; }
@@ -225,26 +262,93 @@
       .replace(/<i>x<\/i>/g, 'x')
       .replace(/<sup>(\d)<\/sup>/g, function(m, d){ return d === '2' ? '²' : (d === '3' ? '³' : d); });
   }
+  function numText(n){ return n < 0 ? '−' + Math.abs(n) : String(n); }
   function derivCoeffs(coeffs){
     const n = coeffs.length - 1, out = [];
     for (let i = 0; i < n; i++) out.push(coeffs[i] * (n - i));
     return out;
   }
-  function numText(n){ return n < 0 ? '−' + Math.abs(n) : String(n); }
   function evalPoly(coeffs, x){
     let v = 0;
     for (let i = 0; i < coeffs.length; i++) v = v * x + coeffs[i];
     return v;
   }
 
-  /* ================= 出题 ================= */
-  function makePoly(r, deg){
+  /* ================= 输入解析与判分 ================= */
+  function parsePoly(raw){
+    let s = String(raw || '').trim().toLowerCase();
+    if (!s) return null;
+    s = s.replace(/[−–—]/g, '-').replace(/[＋]/g, '+')
+         .replace(/[×·*]/g, '')
+         .replace(/²/g, '^2').replace(/³/g, '^3').replace(/⁴/g, '^4')
+         .replace(/x([2-9])/g, 'x^$1')
+         .replace(/\s+/g, '');
+    s = s.replace(/^[a-z]\s*['′]?\s*\(\s*x\s*\)\s*=/i, '');
+    s = s.replace(/^[a-z]\s*=/i, '');
+    s = s.replace(/^原式\s*=/, '').replace(/^=+/, '');
+    s = s.replace(/[+\-]c$/i, '');
+    if (!s) return null;
+    if (s[0] !== '+' && s[0] !== '-') s = '+' + s;
+    s = s.replace(/\+-/g, '-').replace(/--/g, '+');
+    const terms = s.match(/[+\-][^+\-]+/g);
+    if (!terms) return null;
+    const map = {};
+    for (const t of terms){
+      const sign = t[0] === '-' ? -1 : 1;
+      let body = t.slice(1);
+      if (!body) return null;
+      let m;
+      if ((m = body.match(/^(\d*)x\^(\d+)$/))){
+        const c = m[1] === '' ? 1 : parseInt(m[1], 10);
+        const p = parseInt(m[2], 10);
+        if (p > 9) return null;
+        map[p] = (map[p] || 0) + sign * c;
+      } else if ((m = body.match(/^(\d*)x$/))){
+        const c = m[1] === '' ? 1 : parseInt(m[1], 10);
+        map[1] = (map[1] || 0) + sign * c;
+      } else if ((m = body.match(/^(\d+)$/))){
+        map[0] = (map[0] || 0) + sign * parseInt(m[1], 10);
+      } else {
+        return null;
+      }
+    }
+    let maxDeg = 0;
+    Object.keys(map).forEach(function(k){ if (map[k] !== 0 && Number(k) > maxDeg) maxDeg = Number(k); });
+    const arr = [];
+    for (let p = maxDeg; p >= 0; p--) arr.push(map[p] || 0);
+    return arr;
+  }
+  function parseNumber(raw){
+    let s = String(raw || '').trim().replace(/\s+/g, '').replace(/[−–—]/g, '-').replace(/^\+/, '');
+    if (!/^-?\d+$/.test(s)) return null;
+    return parseInt(s, 10);
+  }
+  function polyEquals(a, b){
+    const max = Math.max(a.length, b.length);
+    for (let i = 0; i < max; i++){
+      const av = a[a.length - 1 - i] || 0;
+      const bv = b[b.length - 1 - i] || 0;
+      if (av !== bv) return false;
+    }
+    return true;
+  }
+
+  /* ================= 难度与出题 ================= */
+  const LEVELS = [
+    { maxC: 3, minTerms: 2, specs: [[1,'d'],[1,'d'],[2,'d'],[2,'d'],[2,'e']] },
+    { maxC: 4, minTerms: 2, specs: [[1,'d'],[2,'d'],[2,'d'],[3,'d'],[2,'e']] },
+    { maxC: 5, minTerms: 2, specs: [[2,'d'],[2,'d'],[3,'d'],[3,'d'],[2,'e']] },
+    { maxC: 6, minTerms: 3, specs: [[2,'d'],[3,'d'],[3,'d'],[3,'d'],[3,'e']] },
+    { maxC: 8, minTerms: 3, specs: [[3,'d'],[3,'d'],[3,'d'],[3,'d'],[3,'e']] }
+  ];
+
+  function makePoly(r, deg, cfg){
     let coeffs;
     do {
-      if (deg === 3) coeffs = [nz(r, -4, 4), ri(r, -5, 5), ri(r, -5, 5), ri(r, -7, 7)];
-      else if (deg === 2) coeffs = [nz(r, -5, 5), ri(r, -6, 6), ri(r, -8, 8)];
-      else coeffs = [nz(r, -6, 6), ri(r, -9, 9)];
-    } while (countNZ(coeffs) < 2);
+      if (deg === 3) coeffs = [nz(r, -cfg.maxC, cfg.maxC), ri(r, -cfg.maxC, cfg.maxC), ri(r, -cfg.maxC, cfg.maxC), ri(r, -(cfg.maxC + 2), cfg.maxC + 2)];
+      else if (deg === 2) coeffs = [nz(r, -cfg.maxC, cfg.maxC), ri(r, -cfg.maxC, cfg.maxC), ri(r, -(cfg.maxC + 1), cfg.maxC + 1)];
+      else coeffs = [nz(r, -cfg.maxC, cfg.maxC), ri(r, -(cfg.maxC + 2), cfg.maxC + 2)];
+    } while (countNZ(coeffs) < cfg.minTerms);
     return coeffs;
   }
 
@@ -270,11 +374,9 @@
     }
 
     let ansHtml = '<div class="ans-main math"><i>f</i><span class="prime">&#39;</span>(<i>x</i>) = ' + polyHtml(d) + '</div>';
-    let ansText = 'f′(x) = ' + polyText(d);
     if (isEval){
       const value = evalPoly(d, x0);
       ansHtml += '<div class="ans-main math" style="margin-top:4px"><i>f</i><span class="prime">&#39;</span>(' + numText(x0) + ') = ' + numText(value) + '</div>';
-      ansText += '；f′(' + numText(x0) + ') = ' + numText(value);
       const vals = [];
       for (let i = 0; i < d.length; i++){
         const p = d.length - 1 - i;
@@ -294,61 +396,63 @@
     return {
       type: degName + '多项式 · ' + (isEval ? '求导数值' : '求导'),
       question: qHtml,
-      answer: ansHtml + '<ul class="steps">' + steps.join('') + '</ul>',
       plain: qText,
-      plainAnswer: ansText
+      answer: ansHtml + '<ul class="steps">' + steps.join('') + '</ul>',
+      check: isEval ? { kind: 'number', value: evalPoly(d, x0) } : { kind: 'poly', coeffs: d },
+      placeholder: isEval ? '例如：17' : '例如：6x^2-6x+5',
+      hint: isEval ? '直接填数值，如 17' : '用 ^ 表示乘方，如 x^3；常数直接写数字'
     };
   }
 
-  function buildProblems(seed){
+  function buildSet(seed, level){
+    const cfg = LEVELS[level - 1];
     const r = mulberry32(seed);
     const probs = [];
     const used = new Set();
-    const degs = shuffle(r, [3, 2, 2, 1]);
-    for (const deg of degs){
-      let coeffs, sig, tries = 0;
+    cfg.specs.forEach(function(spec){
+      const deg = spec[0], mode = spec[1];
+      let coeffs, x0 = null, sig, tries = 0;
       do {
-        coeffs = makePoly(r, deg);
-        sig = 'd' + coeffs.join(',');
+        coeffs = makePoly(r, deg, cfg);
+        if (mode === 'e') x0 = ri(r, -2, 3);
+        sig = mode + coeffs.join(',') + (x0 !== null ? '|' + x0 : '');
         tries++;
-      } while (used.has(sig) && tries < 80);
+      } while (used.has(sig) && tries < 100);
       used.add(sig);
-      probs.push(derivativeProblem(coeffs, 'diff'));
-    }
-    let coeffs, x0, sig, tries = 0;
-    do {
-      coeffs = makePoly(r, pick(r, [2, 3]));
-      x0 = ri(r, -2, 3);
-      sig = 'e' + coeffs.join(',') + '|' + x0;
-      tries++;
-    } while (used.has(sig) && tries < 80);
-    probs.push(derivativeProblem(coeffs, 'eval', x0));
+      probs.push(derivativeProblem(coeffs, mode === 'e' ? 'eval' : 'diff', x0));
+    });
     return probs;
   }
 
-  /* ================= 页面 ================= */
+  /* ================= 页面状态 ================= */
   const now = new Date();
   const key = dateKey(now);
   const dateLabel = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
   document.getElementById('today').textContent = dateLabel;
 
-  const problems = buildProblems(hashStr('derivative|' + key));
-
-  const storageKey = 'daily-derivative:' + key;
-  let state = { done: [false, false, false, false, false] };
+  const LEVEL_KEY = 'daily-derivative:level';
+  let level = 3;
   try {
-    const raw = localStorage.getItem(storageKey);
-    if (raw){
-      const obj = JSON.parse(raw);
-      if (obj && Array.isArray(obj.done) && obj.done.length === 5){
-        state.done = obj.done.map(Boolean);
-      }
-    }
+    const saved = parseInt(localStorage.getItem(LEVEL_KEY) || '3', 10);
+    if (saved >= 1 && saved <= 5) level = saved;
   } catch (e) {}
 
+  let setLabel = '今日题目';
+  let setSeed = hashStr('derivative|' + key + '|L' + level);
+  let problems = buildSet(setSeed, level);
+  let submitted = false;
+
   const list = document.getElementById('list');
-  const doneCount = document.getElementById('doneCount');
+  const scoreNum = document.getElementById('scoreNum');
+  const scoreLabel = document.getElementById('scoreLabel');
   const bar = document.getElementById('bar');
+  const levelText = document.getElementById('levelText');
+  const levelDots = document.getElementById('levelDots');
+  const setLabelEl = document.getElementById('setLabel');
+  const submitBtn = document.getElementById('submitBtn');
+  const resultPanel = document.getElementById('resultPanel');
+  const scoreBig = document.getElementById('scoreBig');
+  const resultMsg = document.getElementById('resultMsg');
   const toastEl = document.getElementById('toast');
   let toastTimer = null;
 
@@ -356,18 +460,15 @@
     toastEl.textContent = msg;
     toastEl.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1900);
   }
-
-  function save(){
-    try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+  function renderLevel(){
+    levelText.textContent = 'Lv.' + level;
+    Array.prototype.forEach.call(levelDots.children, function(el, i){
+      el.classList.toggle('on', i < level);
+    });
   }
-
-  function updateProgress(){
-    const n = state.done.filter(Boolean).length;
-    doneCount.textContent = n;
-    bar.style.width = (n / 5 * 100) + '%';
-  }
+  renderLevel();
 
   function render(){
     list.innerHTML = problems.map(function(p, i){
@@ -377,55 +478,120 @@
           '<div class="content">' +
             '<div class="type">' + p.type + '</div>' +
             '<div class="q">' + p.question + '</div>' +
+            '<div class="input-row">' +
+              '<input class="ans-input" data-i="' + i + '" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="' + p.placeholder + '" aria-label="第 ' + (i+1) + ' 题答案">' +
+              '<div class="input-hint">' + p.hint + '</div>' +
+            '</div>' +
+            '<div class="feedback" hidden></div>' +
             '<div class="answer" hidden>' +
               '<div class="head">答案与解析</div>' +
               p.answer +
-            '</div>' +
-            '<div class="row">' +
-              '<button class="btn small toggle" aria-expanded="false">显示答案</button>' +
-              '<label class="done-label"><input type="checkbox" class="done" data-i="' + i + '"' + (state.done[i] ? ' checked' : '') + '> 已完成</label>' +
             '</div>' +
           '</div>' +
         '</article>'
       );
     }).join('');
-    updateProgress();
+    submitted = false;
+    scoreNum.textContent = '—';
+    scoreLabel.textContent = '提交后判分';
+    bar.style.width = '0%';
+    submitBtn.disabled = false;
+    submitBtn.textContent = '提交答案并判分';
+    resultPanel.hidden = true;
+    setLabelEl.textContent = setLabel;
+    Array.prototype.forEach.call(list.querySelectorAll('.ans-input'), function(inp){
+      inp.addEventListener('keydown', function(e){
+        if (e.key === 'Enter'){ e.preventDefault(); grade(); }
+      });
+    });
   }
 
-  render();
+  function checkAnswer(p, raw){
+    if (!String(raw || '').trim()) return { ok: false, kind: 'empty' };
+    if (p.check.kind === 'number'){
+      const v = parseNumber(raw);
+      if (v === null) return { ok: false, kind: 'format' };
+      return v === p.check.value ? { ok: true } : { ok: false, kind: 'wrong' };
+    }
+    const parsed = parsePoly(raw);
+    if (!parsed) return { ok: false, kind: 'format' };
+    if (polyEquals(parsed, p.check.coeffs)) return { ok: true };
+    return { ok: false, kind: 'wrong' };
+  }
 
-  list.addEventListener('click', function(e){
-    const btn = e.target.closest('.toggle');
-    if (!btn) return;
-    const card = btn.closest('.problem');
-    const ans = card.querySelector('.answer');
-    const willShow = ans.hidden;
-    ans.hidden = !willShow;
-    btn.textContent = willShow ? '隐藏答案' : '显示答案';
-    btn.setAttribute('aria-expanded', String(willShow));
-  });
+  function grade(){
+    if (submitted) return;
+    const inputs = Array.prototype.slice.call(list.querySelectorAll('.ans-input'));
+    if (inputs.every(function(inp){ return !inp.value.trim(); })){
+      toast('先写几道答案再提交吧');
+      return;
+    }
+    let correct = 0;
+    inputs.forEach(function(inp, i){
+      const p = problems[i];
+      const card = inp.closest('.problem');
+      const fb = card.querySelector('.feedback');
+      const ans = card.querySelector('.answer');
+      const res = checkAnswer(p, inp.value);
+      inp.disabled = true;
+      ans.hidden = false;
+      fb.hidden = false;
+      card.classList.remove('correct', 'wrong');
+      if (res.ok){
+        correct++;
+        card.classList.add('correct');
+        fb.className = 'feedback ok';
+        fb.textContent = '✓ 正确';
+      } else {
+        card.classList.add('wrong');
+        fb.className = 'feedback bad';
+        if (res.kind === 'empty') fb.textContent = '✗ 没有填写答案';
+        else if (res.kind === 'format') fb.textContent = '✗ 格式无法识别，试试 6x^2-6x+5 这样的写法';
+        else fb.textContent = '✗ 答案不对，看看下面的解析';
+      }
+    });
 
-  list.addEventListener('change', function(e){
-    const cb = e.target;
-    if (!cb.classList.contains('done')) return;
-    const i = Number(cb.dataset.i);
-    state.done[i] = cb.checked;
-    save();
-    updateProgress();
-    cb.closest('.problem').classList.toggle('is-done', cb.checked);
-  });
+    submitted = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = '已提交本组';
+    scoreNum.textContent = correct;
+    scoreLabel.textContent = '本组答对';
+    bar.style.width = (correct / 5 * 100) + '%';
+    scoreBig.textContent = correct;
+    resultPanel.hidden = false;
 
-  document.querySelectorAll('.problem').forEach(function(card, i){
-    if (state.done[i]) card.classList.add('is-done');
-  });
+    const old = level;
+    if (correct <= 2) level = Math.max(1, level - 1);
+    else if (correct >= 4) level = Math.min(5, level + 1);
+    if (level !== old){
+      try { localStorage.setItem(LEVEL_KEY, String(level)); } catch (e) {}
+    }
+    renderLevel();
 
-  document.getElementById('showAll').addEventListener('click', function(){
-    document.querySelectorAll('.answer').forEach(function(a){ a.hidden = false; });
-    document.querySelectorAll('.toggle').forEach(function(b){ b.textContent = '隐藏答案'; b.setAttribute('aria-expanded', 'true'); });
-  });
-  document.getElementById('hideAll').addEventListener('click', function(){
-    document.querySelectorAll('.answer').forEach(function(a){ a.hidden = true; });
-    document.querySelectorAll('.toggle').forEach(function(b){ b.textContent = '显示答案'; b.setAttribute('aria-expanded', 'false'); });
+    let msg;
+    if (correct <= 2){
+      msg = level < old
+        ? '错了 ' + (5 - correct) + ' 题，难度降到 <b>Lv.' + level + '</b>，先把基础打牢。'
+        : '错了 ' + (5 - correct) + ' 题，已经是最低难度 <b>Lv.1</b>，慢慢来。';
+    } else if (correct >= 4){
+      msg = level > old
+        ? '答对 ' + correct + ' 题，难度升到 <b>Lv.' + level + '</b>，试试更难的题。'
+        : '答对 ' + correct + ' 题，已是最高难度 <b>Lv.5</b>，保持住！';
+    } else {
+      msg = '答对 ' + correct + ' 题，难度保持 <b>Lv.' + level + '</b>，继续加油。';
+    }
+    resultMsg.innerHTML = msg;
+    resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  submitBtn.addEventListener('click', grade);
+
+  document.getElementById('nextBtn').addEventListener('click', function(){
+    setLabel = '练习组';
+    setSeed = ((Date.now() % 2147483647) ^ (level * 2654435761)) >>> 0;
+    problems = buildSet(setSeed, level);
+    render();
+    list.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   document.getElementById('copyBtn').addEventListener('click', function(){
@@ -446,7 +612,6 @@
 
   document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
 
-  /* 倒计时与跨日刷新 */
   const countdown = document.getElementById('countdown');
   function tick(){
     const n = new Date();
@@ -457,6 +622,8 @@
   }
   tick();
   setInterval(tick, 1000);
+
+  render();
 })();
 </script>
 </body>
