@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>每日求导 · 每天 5 题</title>
+<style>
+  :root{
+    --ink:#1f2937;
+    --muted:#6b7280;
+    --paper:#f7f4ec;
+    --card:#fffdf9;
+    --line:#e8e1d3;
+    --accent:#2563eb;
+    --accent-soft:#eff6ff;
+    --accent-line:#bfdbfe;
+    --shadow:0 18px 40px -30px rgba(70,55,25,.55);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--ink);
+    line-height:1.6;
+    background:
+      radial-gradient(900px 520px at 8% -12%, #e4edff 0%, rgba(228,237,255,0) 58%),
+      radial-gradient(820px 480px at 100% 0%, #fff1d6 0%, rgba(255,241,214,0) 52%),
+      var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:900px;margin:0 auto;padding:20px 22px 56px}
+
+  /* 顶栏 */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:4px 0 22px}
+  .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);font-weight:800;font-size:14px;letter-spacing:.01em}
+  .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(140deg,#1d4ed8,#3b82f6);color:#fff;display:grid;place-items:center;font-family:"Cambria Math",Georgia,serif;font-size:17px;box-shadow:0 10px 18px -10px rgba(37,99,235,.7)}
+  nav{display:flex;gap:6px}
+  nav a{font-size:13px;font-weight:700;color:#6b7280;text-decoration:none;padding:7px 12px;border-radius:999px;transition:.2s}
+  nav a:hover{background:#fff;color:var(--accent);box-shadow:0 2px 8px rgba(70,55,25,.08)}
+  nav a.active{background:#fff;color:var(--accent);box-shadow:0 2px 8px rgba(70,55,25,.08)}
+
+  /* 标题区 */
+  .hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:4px 0 24px;border-bottom:1px dashed #d9d0bd}
+  .kicker{font-size:11px;font-weight:800;letter-spacing:.22em;color:var(--accent)}
+  h1{font-size:clamp(36px,6vw,52px);line-height:1.12;margin:8px 0 10px;letter-spacing:-.03em;font-weight:800}
+  .hero p{margin:0;color:var(--muted);font-size:13.5px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;font-size:12.5px;color:#8b8272}
+  .meta .sep{width:3px;height:3px;border-radius:50%;background:#c9bfa9}
+  .meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+  .score{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;min-width:160px;box-shadow:var(--shadow);flex:none}
+  .score-num{font-size:28px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+  .score-num span{font-size:13px;color:var(--muted);font-weight:600;margin-left:2px}
+  .score-label{font-size:11.5px;color:#8b8272;margin-top:5px}
+  .progress{height:6px;background:#eee8db;border-radius:99px;overflow:hidden;margin-top:10px}
+  .progress i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s ease}
+
+  /* 题卡 */
+  .list{display:flex;flex-direction:column;gap:16px;margin:24px 0 0}
+  .problem{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow);transition:border-color .2s}
+  .problem.is-done{border-color:#bbf7d0}
+  .num{width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent);font-weight:800;display:grid;place-items:center;font-size:13.5px;flex:none;font-variant-numeric:tabular-nums}
+  .content{flex:1;min-width:0}
+  .type{font-size:10.5px;letter-spacing:.12em;font-weight:800;color:#9a8f7a;margin-bottom:5px}
+  .q{font-size:16.5px;line-height:2.05}
+  .math{font-family:"Cambria Math","STIX Two Math",Georgia,"Times New Roman",serif;font-size:1.07em;white-space:nowrap}
+  .math i{font-style:italic}
+  .math sup{font-size:.64em}
+  .prime{font-family:Georgia,"Times New Roman",serif;font-style:normal;font-weight:700;font-size:1.18em;line-height:0;vertical-align:.2em;padding-left:.03em;color:inherit}
+  .answer{margin-top:14px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;padding:12px 15px}
+  .answer[hidden]{display:none}
+  .answer .head{font-size:10.5px;font-weight:800;letter-spacing:.12em;color:var(--accent);margin-bottom:5px}
+  .ans-main{font-size:17px;font-weight:700;line-height:1.95}
+  .steps{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:3px}
+  .steps li{font-size:13px;color:#475569;line-height:1.9;padding-left:12px;position:relative}
+  .steps li::before{content:"·";position:absolute;left:0;color:var(--accent);font-weight:800}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+  .btn{font-family:inherit;font-size:13px;font-weight:700;border-radius:10px;border:1px solid #ddd3c0;background:#fff;color:#4b5563;padding:9px 14px;cursor:pointer;transition:.18s}
+  .btn:hover{border-color:var(--accent);color:var(--accent);background:#fff}
+  .btn.small{padding:7px 12px;font-size:12px;border-radius:9px}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 10px 18px -12px rgba(37,99,235,.8)}
+  .btn.primary:hover{background:#1d4ed8;color:#fff}
+  .done-label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap}
+  .done-label input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 0}
+  footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:30px;padding-top:16px;font-size:12px;color:#9a8f7a}
+  footer a{color:var(--accent);text-decoration:none;font-weight:700}
+  footer a:hover{text-decoration:underline}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);background:#1f2937;color:#fff;padding:10px 16px;border-radius:10px;font-size:12.5px;opacity:0;pointer-events:none;transition:.25s;z-index:20;box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:680px){
+    .page{padding:16px 14px 42px}
+    .topbar{padding-bottom:16px}
+    .hero{flex-direction:column;align-items:stretch;gap:14px;padding-bottom:18px}
+    .score{display:flex;align-items:center;gap:12px;padding:10px 14px;min-width:0}
+    .score-num{font-size:22px}
+    .score-label{margin:0}
+    .progress{flex:1;margin:0;min-width:70px}
+    .problem{padding:16px 15px;gap:12px}
+    .num{width:32px;height:32px;font-size:12px;border-radius:9px}
+    .q{font-size:15.5px;line-height:1.95}
+    .ans-main{font-size:15.5px}
+    .type{font-size:10px}
+  }
+  @media print{
+    body{background:#fff}
+    .topbar,.actions,.row,.score,.meta,.toast,footer,.kicker{display:none!important}
+    .page{max-width:none;padding:0}
+    .hero{border:none;padding:0 0 12px}
+    .problem{box-shadow:none;border:1px solid #ddd;break-inside:avoid;page-break-inside:avoid}
+    .answer{background:#fff;border:1px dashed #bbb}
+    .list{gap:12px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="logo">∂</span>每日一练</a>
+    <nav>
+      <a class="active" href="每日求导.html">求导</a>
+      <a href="每日微积分.html">微积分</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="kicker">DAILY DERIVATIVE</div>
+        <h1>每日求导</h1>
+        <p>每天 5 道 · 三次以下多项式 · 按日期自动生成</p>
+        <div class="meta">
+          <span id="today">—</span>
+          <span class="sep"></span>
+          <span>距明日更新 <b id="countdown">--:--:--</b></span>
+        </div>
+      </div>
+      <div class="score">
+        <div class="score-num"><b id="doneCount">0</b><span>/ 5</span></div>
+        <div class="score-label">今日已完成</div>
+        <div class="progress"><i id="bar"></i></div>
+      </div>
+    </section>
+
+    <section class="list" id="list"></section>
+
+    <div class="actions">
+      <button class="btn primary" id="showAll">显示全部答案</button>
+      <button class="btn" id="hideAll">隐藏全部答案</button>
+      <button class="btn" id="copyBtn">复制题目</button>
+      <button class="btn" id="printBtn">打印</button>
+    </div>
+  </main>
+
+  <footer>
+    <a href="每日微积分.html">← 去练微积分</a>
+    <span>题目每天 00:00 自动更新 · 答案与解析在每题下方</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ================= 日期与可复现随机 ================= */
+  function pad(n){ return String(n).padStart(2, '0'); }
+  function dateKey(d){ return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()); }
+  function hashStr(s){
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function ri(r, a, b){ return a + Math.floor(r() * (b - a + 1)); }
+  function nz(r, a, b){ let v = 0; while (v === 0) v = ri(r, a, b); return v; }
+  function pick(r, arr){ return arr[Math.floor(r() * arr.length)]; }
+  function shuffle(r, arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+
+  /* ================= 多项式工具 ================= */
+  function countNZ(a){ let n = 0; for (const v of a) if (v) n++; return n; }
+  function termHtml(c, p){
+    if (!c) return '0';
+    const a = Math.abs(c);
+    let core;
+    if (p === 0) core = String(a);
+    else core = (a === 1 ? '' : String(a)) + '<i>x</i>' + (p > 1 ? '<sup>' + p + '</sup>' : '');
+    return (c < 0 ? '−' : '') + core;
+  }
+  function polyHtml(coeffs){
+    const deg = coeffs.length - 1;
+    let out = '', first = true;
+    for (let i = 0; i < coeffs.length; i++){
+      const c = coeffs[i], p = deg - i;
+      if (!c) continue;
+      const a = Math.abs(c);
+      const sign = c < 0 ? (first ? '−' : ' − ') : (first ? '' : ' + ');
+      let core;
+      if (p === 0) core = String(a);
+      else core = (a === 1 ? '' : String(a)) + '<i>x</i>' + (p > 1 ? '<sup>' + p + '</sup>' : '');
+      out += sign + core;
+      first = false;
+    }
+    return out || '0';
+  }
+  function polyText(coeffs){
+    return polyHtml(coeffs)
+      .replace(/<i>x<\/i>/g, 'x')
+      .replace(/<sup>(\d)<\/sup>/g, function(m, d){ return d === '2' ? '²' : (d === '3' ? '³' : d); });
+  }
+  function derivCoeffs(coeffs){
+    const n = coeffs.length - 1, out = [];
+    for (let i = 0; i < n; i++) out.push(coeffs[i] * (n - i));
+    return out;
+  }
+  function numText(n){ return n < 0 ? '−' + Math.abs(n) : String(n); }
+  function evalPoly(coeffs, x){
+    let v = 0;
+    for (let i = 0; i < coeffs.length; i++) v = v * x + coeffs[i];
+    return v;
+  }
+
+  /* ================= 出题 ================= */
+  function makePoly(r, deg){
+    let coeffs;
+    do {
+      if (deg === 3) coeffs = [nz(r, -4, 4), ri(r, -5, 5), ri(r, -5, 5), ri(r, -7, 7)];
+      else if (deg === 2) coeffs = [nz(r, -5, 5), ri(r, -6, 6), ri(r, -8, 8)];
+      else coeffs = [nz(r, -6, 6), ri(r, -9, 9)];
+    } while (countNZ(coeffs) < 2);
+    return coeffs;
+  }
+
+  function derivativeProblem(coeffs, mode, x0){
+    const deg = coeffs.length - 1;
+    const d = derivCoeffs(coeffs);
+    const degName = ['', '一次', '二次', '三次'][deg];
+    const isEval = mode === 'eval';
+
+    const qHtml = isEval
+      ? '已知 <span class="math"><i>f</i>(<i>x</i>) = ' + polyHtml(coeffs) + '</span>，求 <span class="math"><i>f</i><span class="prime">&#39;</span>(' + numText(x0) + ')</span>。'
+      : '已知 <span class="math"><i>f</i>(<i>x</i>) = ' + polyHtml(coeffs) + '</span>，求 <span class="math"><i>f</i><span class="prime">&#39;</span>(<i>x</i>)</span>。';
+    const qText = isEval
+      ? '已知 f(x) = ' + polyText(coeffs) + '，求 f′(' + numText(x0) + ')。'
+      : '已知 f(x) = ' + polyText(coeffs) + '，求 f′(x)。';
+
+    const steps = [];
+    for (let i = 0; i < coeffs.length; i++){
+      const c = coeffs[i], p = deg - i;
+      if (!c) continue;
+      const dc = c * p;
+      steps.push('<li><span class="math">(' + termHtml(c, p) + ')<span class="prime">&#39;</span> = ' + (dc === 0 ? '0' : termHtml(dc, p - 1)) + '</span></li>');
+    }
+
+    let ansHtml = '<div class="ans-main math"><i>f</i><span class="prime">&#39;</span>(<i>x</i>) = ' + polyHtml(d) + '</div>';
+    let ansText = 'f′(x) = ' + polyText(d);
+    if (isEval){
+      const value = evalPoly(d, x0);
+      ansHtml += '<div class="ans-main math" style="margin-top:4px"><i>f</i><span class="prime">&#39;</span>(' + numText(x0) + ') = ' + numText(value) + '</div>';
+      ansText += '；f′(' + numText(x0) + ') = ' + numText(value);
+      const vals = [];
+      for (let i = 0; i < d.length; i++){
+        const p = d.length - 1 - i;
+        if (!d[i]) continue;
+        vals.push(d[i] * Math.pow(x0, p));
+      }
+      if (vals.length > 1){
+        let expr = '';
+        vals.forEach(function(v, i){
+          expr += (v < 0 ? (i ? ' − ' : '−') : (i ? ' + ' : '')) + Math.abs(v);
+        });
+        steps.push('<li><span class="math">代入 <i>x</i> = ' + numText(x0) + '：' + expr + ' = ' + numText(value) + '</span></li>');
+      }
+    }
+    steps.push('<li>逐项求导：<span class="math">(<i>x</i><sup><i>n</i></sup>)<span class="prime">&#39;</span> = <i>n</i><i>x</i><sup><i>n</i>−1</sup></span>，常数项导数为 0。</li>');
+
+    return {
+      type: degName + '多项式 · ' + (isEval ? '求导数值' : '求导'),
+      question: qHtml,
+      answer: ansHtml + '<ul class="steps">' + steps.join('') + '</ul>',
+      plain: qText,
+      plainAnswer: ansText
+    };
+  }
+
+  function buildProblems(seed){
+    const r = mulberry32(seed);
+    const probs = [];
+    const used = new Set();
+    const degs = shuffle(r, [3, 2, 2, 1]);
+    for (const deg of degs){
+      let coeffs, sig, tries = 0;
+      do {
+        coeffs = makePoly(r, deg);
+        sig = 'd' + coeffs.join(',');
+        tries++;
+      } while (used.has(sig) && tries < 80);
+      used.add(sig);
+      probs.push(derivativeProblem(coeffs, 'diff'));
+    }
+    let coeffs, x0, sig, tries = 0;
+    do {
+      coeffs = makePoly(r, pick(r, [2, 3]));
+      x0 = ri(r, -2, 3);
+      sig = 'e' + coeffs.join(',') + '|' + x0;
+      tries++;
+    } while (used.has(sig) && tries < 80);
+    probs.push(derivativeProblem(coeffs, 'eval', x0));
+    return probs;
+  }
+
+  /* ================= 页面 ================= */
+  const now = new Date();
+  const key = dateKey(now);
+  const dateLabel = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+  document.getElementById('today').textContent = dateLabel;
+
+  const problems = buildProblems(hashStr('derivative|' + key));
+
+  const storageKey = 'daily-derivative:' + key;
+  let state = { done: [false, false, false, false, false] };
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (raw){
+      const obj = JSON.parse(raw);
+      if (obj && Array.isArray(obj.done) && obj.done.length === 5){
+        state.done = obj.done.map(Boolean);
+      }
+    }
+  } catch (e) {}
+
+  const list = document.getElementById('list');
+  const doneCount = document.getElementById('doneCount');
+  const bar = document.getElementById('bar');
+  const toastEl = document.getElementById('toast');
+  let toastTimer = null;
+
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800);
+  }
+
+  function save(){
+    try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function updateProgress(){
+    const n = state.done.filter(Boolean).length;
+    doneCount.textContent = n;
+    bar.style.width = (n / 5 * 100) + '%';
+  }
+
+  function render(){
+    list.innerHTML = problems.map(function(p, i){
+      return (
+        '<article class="problem" data-index="' + i + '">' +
+          '<div class="num">' + pad(i + 1) + '</div>' +
+          '<div class="content">' +
+            '<div class="type">' + p.type + '</div>' +
+            '<div class="q">' + p.question + '</div>' +
+            '<div class="answer" hidden>' +
+              '<div class="head">答案与解析</div>' +
+              p.answer +
+            '</div>' +
+            '<div class="row">' +
+              '<button class="btn small toggle" aria-expanded="false">显示答案</button>' +
+              '<label class="done-label"><input type="checkbox" class="done" data-i="' + i + '"' + (state.done[i] ? ' checked' : '') + '> 已完成</label>' +
+            '</div>' +
+          '</div>' +
+        '</article>'
+      );
+    }).join('');
+    updateProgress();
+  }
+
+  render();
+
+  list.addEventListener('click', function(e){
+    const btn = e.target.closest('.toggle');
+    if (!btn) return;
+    const card = btn.closest('.problem');
+    const ans = card.querySelector('.answer');
+    const willShow = ans.hidden;
+    ans.hidden = !willShow;
+    btn.textContent = willShow ? '隐藏答案' : '显示答案';
+    btn.setAttribute('aria-expanded', String(willShow));
+  });
+
+  list.addEventListener('change', function(e){
+    const cb = e.target;
+    if (!cb.classList.contains('done')) return;
+    const i = Number(cb.dataset.i);
+    state.done[i] = cb.checked;
+    save();
+    updateProgress();
+    cb.closest('.problem').classList.toggle('is-done', cb.checked);
+  });
+
+  document.querySelectorAll('.problem').forEach(function(card, i){
+    if (state.done[i]) card.classList.add('is-done');
+  });
+
+  document.getElementById('showAll').addEventListener('click', function(){
+    document.querySelectorAll('.answer').forEach(function(a){ a.hidden = false; });
+    document.querySelectorAll('.toggle').forEach(function(b){ b.textContent = '隐藏答案'; b.setAttribute('aria-expanded', 'true'); });
+  });
+  document.getElementById('hideAll').addEventListener('click', function(){
+    document.querySelectorAll('.answer').forEach(function(a){ a.hidden = true; });
+    document.querySelectorAll('.toggle').forEach(function(b){ b.textContent = '显示答案'; b.setAttribute('aria-expanded', 'false'); });
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    const text = '每日求导 · ' + dateLabel + '\n\n' + problems.map(function(p, i){
+      return (i + 1) + '. ' + p.plain;
+    }).join('\n');
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast('已复制 5 道题'); }, function(){ toast('复制失败，请手动选择'); });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); toast('已复制 5 道题'); } catch (e) { toast('复制失败，请手动选择'); }
+      document.body.removeChild(ta);
+    }
+  });
+
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+
+  /* 倒计时与跨日刷新 */
+  const countdown = document.getElementById('countdown');
+  function tick(){
+    const n = new Date();
+    const tomorrow = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1);
+    let s = Math.max(0, Math.floor((tomorrow - n) / 1000));
+    countdown.textContent = pad(Math.floor(s / 3600)) + ':' + pad(Math.floor((s % 3600) / 60)) + ':' + pad(s % 60);
+    if (dateKey(n) !== key) location.reload();
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
