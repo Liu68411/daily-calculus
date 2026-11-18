@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>每日一练 · 微积分</title>
+<style>
+  :root{
+    --ink:#1f2937;
+    --muted:#6b7280;
+    --paper:#f7f4ec;
+    --card:#fffdf9;
+    --line:#e8e1d3;
+    --blue:#2563eb;
+    --blue-soft:#eff6ff;
+    --violet:#7c3aed;
+    --violet-soft:#f5f3ff;
+    --shadow:0 26px 60px -40px rgba(70,55,25,.65);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--ink);line-height:1.6;
+    background:
+      radial-gradient(900px 520px at 8% -10%, #e4edff 0%, rgba(228,237,255,0) 58%),
+      radial-gradient(820px 500px at 100% 0%, #ede9fe 0%, rgba(237,233,254,0) 55%),
+      radial-gradient(700px 400px at 60% 110%, #fff1d6 0%, rgba(255,241,214,0) 60%),
+      var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:960px;margin:0 auto;padding:22px 24px 60px}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:4px 0 30px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:14px}
+  .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(140deg,#1d4ed8,#7c3aed);color:#fff;display:grid;place-items:center;font-family:"Cambria Math",Georgia,serif;font-size:17px;box-shadow:0 10px 18px -10px rgba(80,70,220,.6)}
+  .date{font-size:12.5px;color:#8b8272}
+
+  .hero{padding:8px 0 26px}
+  .kicker{font-size:11px;font-weight:800;letter-spacing:.22em;color:#7c3aed}
+  h1{font-size:clamp(38px,6.4vw,58px);line-height:1.12;letter-spacing:-.035em;margin:10px 0 14px;font-weight:800}
+  h1 em{font-style:normal;background:linear-gradient(115deg,#2563eb 10%,#7c3aed 60%,#f59e0b 110%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{max-width:640px;margin:0;color:#5b5344;font-size:15px;line-height:1.85}
+  .lead b{color:var(--ink)}
+  .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+  .pill{font-size:12px;font-weight:700;color:#5b5344;background:rgba(255,253,249,.92);border:1px solid var(--line);padding:7px 12px;border-radius:999px}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+  .card{
+    position:relative;display:flex;flex-direction:column;background:var(--card);
+    border:1px solid var(--line);border-radius:22px;padding:24px 24px 20px;
+    text-decoration:none;color:inherit;box-shadow:var(--shadow);
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    overflow:hidden;
+  }
+  .card:hover{transform:translateY(-4px);border-color:#c7d2fe;box-shadow:0 34px 70px -38px rgba(70,55,25,.7)}
+  .card::after{content:"";position:absolute;inset:auto -40px -60px auto;width:180px;height:180px;border-radius:50%;filter:blur(10px);opacity:.5;pointer-events:none}
+  .card.deriv::after{background:radial-gradient(circle,#dbeafe,transparent 70%)}
+  .card.calc::after{background:radial-gradient(circle,#ede9fe,transparent 70%)}
+  .icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-family:"Cambria Math",Georgia,serif;font-size:26px;font-weight:700;margin-bottom:16px}
+  .deriv .icon{background:var(--blue-soft);color:var(--blue);border:1px solid #bfdbfe}
+  .calc .icon{background:var(--violet-soft);color:var(--violet);border:1px solid #ddd6fe}
+  .card h2{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+  .card .sub{font-size:12px;font-weight:700;letter-spacing:.06em;margin-bottom:10px}
+  .deriv .sub{color:var(--blue)}
+  .calc .sub{color:var(--violet)}
+  .card p{margin:0;color:#6b7280;font-size:13px;line-height:1.8}
+  .feats{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 18px}
+  .feats span{font-size:10.5px;font-weight:700;color:#6b7280;background:#f4efe4;padding:3px 8px;border-radius:6px}
+  .go{margin-top:auto;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:13.5px}
+  .deriv .go{color:var(--blue)}
+  .calc .go{color:var(--violet)}
+  .go .arrow{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;transition:.2s;font-size:15px}
+  .deriv .go .arrow{background:var(--blue-soft)}
+  .calc .go .arrow{background:var(--violet-soft)}
+  .card:hover .go .arrow{transform:translateX(3px)}
+  .deriv:hover .go .arrow{background:var(--blue);color:#fff}
+  .calc:hover .go .arrow{background:var(--violet);color:#fff}
+
+  .how{margin-top:22px;background:rgba(255,253,249,.72);border:1px dashed #d6cbb6;border-radius:16px;padding:15px 18px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+  .how b{font-size:12px;color:#5b5344;letter-spacing:.06em}
+  .how ul{margin:0;padding:0;list-style:none;display:flex;gap:16px;flex-wrap:wrap;flex:1}
+  .how li{font-size:12px;color:#8b8272;line-height:1.6}
+  .how li::before{content:"·";color:#b9ad96;font-weight:800;margin-right:5px}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:11.5px;color:#9a8f7a}
+
+  @media (max-width:760px){
+    .page{padding:18px 16px 46px}
+    .grid{grid-template-columns:1fr}
+    .hero h1{font-size:38px}
+    .topbar{padding-bottom:22px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="brand"><span class="logo">∫</span>每日一练 · 微积分</div>
+    <div class="date" id="today">—</div>
+  </header>
+
+  <section class="hero">
+    <div class="kicker">DAILY MATH PRACTICE</div>
+    <h1>每天 5 题，<em>把微积分练熟</em></h1>
+    <p class="lead">两个页面，各 5 道小题：一个专注<b>求导</b>，一个专注<b>积分</b>。题目按日期自动生成，<b>每天 00:00 更新</b>；答案与解析就藏在每道题下面，做完再看，效果更好。</p>
+    <div class="pills">
+      <span class="pill">每天 5 题</span>
+      <span class="pill">按日期固定</span>
+      <span class="pill">手机 / 平板可用</span>
+      <span class="pill">无需注册</span>
+    </div>
+  </section>
+
+  <main class="grid">
+    <a class="card deriv" href="%E6%AF%8F%E6%97%A5%E6%B1%82%E5%AF%BC.html">
+      <div class="icon">d/dx</div>
+      <h2>每日求导</h2>
+      <div class="sub">三次以下多项式 · 5 题</div>
+      <p>一次到三次多项式求导，最后一题是求导数值。逐项求导的步骤会完整列出，适合刚学完求导公式时每天热身。</p>
+      <div class="feats"><span>幂函数求导</span><span>求导数值</span><span>逐项解析</span></div>
+      <div class="go">进入练习 <span class="arrow">→</span></div>
+    </a>
+
+    <a class="card calc" href="%E6%AF%8F%E6%97%A5%E5%BE%AE%E7%A7%AF%E5%88%86.html">
+      <div class="icon">∫</div>
+      <h2>每日微积分</h2>
+      <div class="sub">二次以下积分 · 5 题</div>
+      <p>3 道二次多项式不定积分、1 道一次不定积分、1 道定积分。系数特意选过，答案干净，重点练“+C”和定积分代值。</p>
+      <div class="feats"><span>不定积分</span><span>定积分</span><span>积分常数</span></div>
+      <div class="go">进入练习 <span class="arrow">→</span></div>
+    </a>
+  </main>
+
+  <div class="how">
+    <b>使用说明</b>
+    <ul>
+      <li>题目由日期决定，同一天打开看到的是同一套题，刷新不会变。</li>
+      <li>点“显示答案”查看结果与步骤；勾选“已完成”会记录当天进度。</li>
+      <li>支持“显示全部答案”“复制题目”和打印。</li>
+    </ul>
+  </div>
+
+  <footer>
+    <span>每日一练 · 微积分 · 题目与答案由程序生成</span>
+    <span>每天 00:00 自动更新</span>
+  </footer>
+</div>
+<script>
+  document.getElementById('today').textContent = new Date().toLocaleDateString('zh-CN', {
+    year: 'numeric', month: 'long', day: 'numeric', weekday: 'long'
+  });
+</script>
+</body>
+</html>
